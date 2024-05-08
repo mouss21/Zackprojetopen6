@@ -330,7 +330,8 @@ footer nav ul {
 .fa-image {
 	color: rgb(185, 197, 204);
     font-size: 5em;
-    padding-bottom: 20px;
+    padding-bottom: 1px;
+	padding-top: 15px;
 }
 .fa-regular, .far {
     font-weight: 400;
@@ -395,6 +396,7 @@ footer nav ul {
 	display: flex;
 	flex-direction: row;
 	width: 100%;
+	margin-top: 5px;
 }
 #editGallery .modalHeader {
 	justify-content: flex-end;
@@ -438,7 +440,7 @@ footer nav ul {
 }
 .modalContent {
 	display: grid;
-	width: 70%;
+	width: 100%;
 	border-bottom: 1px solid #B3B3B3;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-auto-rows: 1fr;
@@ -511,13 +513,13 @@ footer nav ul {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	height: 200px;
+	height: 180px;
 	background-color: #E8F1F6;
 	border-radius: 3px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	text-align: center;
 	width: 100%;
-	padding-top: 22px;
+	/* padding-top: 22px; */
 	position: relative;
 	box-sizing: border-box;
 }
@@ -525,6 +527,17 @@ footer nav ul {
 	font-size: 10px;
 	font-weight: 400;
 }
+
+#labelPhoto input {
+	display: none;
+}
+#labelPhoto img {
+	display: none;
+	max-width: 100%;
+	height: 100%;
+}
+
+
 #picture {
 	margin-bottom: 27px;
 	width: 5.1em;
@@ -550,7 +563,14 @@ footer nav ul {
 	display: inline-block;
 	cursor: pointer;
 }
-
+.barForm{
+	display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+	margin-bottom: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgb(179, 179, 179);
+}
 
 select {
 	appearance: none;

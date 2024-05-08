@@ -168,24 +168,141 @@ async function displaymodal() {
   modalContent.innerHTML = ""
   const works = await getWorks()
   works.forEach(work => {
-  const figure = document.createElement("figure")
-  const img = document.createElement("img") 
-  const span = document.createElement("span") 
-  const trash = document.createElement("i")
-  trash.classList.add("fa-solid", "fa-trash-can")
-  trash.id = work.id
-  img.src = work.imageUrl
-  span.appendChild(trash)
-  figure.appendChild(span)
-  figure.appendChild(img)
-  modalContent.appendChild(figure)
-});
+    const figure = document.createElement("figure")
+    const img = document.createElement("img") 
+    const span = document.createElement("span") 
+    const trash = document.createElement("i")
+    trash.classList.add("fa-solid", "fa-trash-can")
+    trash.id = work.id
+    img.src = work.imageUrl
+    span.appendChild(trash)
+    figure.appendChild(span)
+    figure.appendChild(img)
+    modalContent.appendChild(figure)
+  });
+  deleteWorks()
 }
 displaymodal();
 
+// Suppression d'un Work à l'appui d'une icone
+
+function deleteWorks() {
+  const trashAll = document.querySelectorAll(".fa-trash-can")
+  trashAll.forEach(trash => {
+    trash.addEventListener("click", (e) =>{
+      const id = trash.id
+      const init = { 
+        method:"DELETE",
+        headers:{"content-type":"application/json"},
+      }
+      fetch("http://localhost:5678/api/works/" +id,init)
+      .then((response) =>{
+        if(!response.ok){
+          console.log("la suppression n'a pas fonctionnée")
+        }
+        return response.json()
+      })
+      .then((data) => {
+        console.log("la suppression a fonctionnée :",data)
+        displaymodal()
+        getWorks()
+      })
+    })
+  });
+}
 
 
   // btn ajouter photo . addEventLister pour basculer vers la deuxième page de la modale
 
 // affichage et supression du modal
 
+// ajout d'un image dans notre modal
+const ajoutImg = document.querySelector("#labelPhoto img")
+const inputFile = document.querySelector("#labelPhoto input")
+const labelFile = document.querySelector("#labelPhoto label")
+const pFile = document.querySelector("#labelPhoto p")
+const iconeFile = document.querySelector("#labelPhoto .fa-image")
+
+//le changement dans l'input
+
+inputFile.addEventListener("change",()=>{
+  const file = inputFile.files[0]
+  console.log(file);
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e){
+      ajoutImg.src = e.target.result
+      ajoutImg.style.display = "flex" 
+      labelFile.style.display = "none" 
+      iconeFile.style.display = "none"
+      pFile.style.display = "none"
+    }
+    reader.readAsDataURL(file);
+  }
+
+})
+
+//créer une liste de categories dans "select"
+async function displayCategoryModal(){
+  const categorys = await getCategorys()
+  categorys.forEach(category =>{
+    const option = document.createElement("option")
+    option.value = category.id
+    option.textContent = category.name
+    document.querySelector("#selectCategory").appendChild(option)
+  })
+}
+displayCategoryModal()
+
+// ajouter une image avec un "POST"
+const foem = document.querySelector(".modals form")
+const modalTitle = document.querySelector(".modals .modalTitle")
+const category = document.querySelector(".modals .category")
+
+foem.addEventListener("submit", async (e) =>{
+  e.preventDefault()
+  const formData = new formData(form)
+  fetch("http://localhost:5678/api/categories",{
+    method:"POST",
+    body:JSON.stringify(formData),
+    headers : {
+      "content-type":"application/json"
+    }
+  })
+   .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      console.log("voici l'image ajout",data)
+      displayCategorysButtons()
+      displayWorks()
+    })
+    .catch(error => console.log("voici l'erreur",error))
+})
+
+// Activer le button de validation
+
+// Vérifie l'état du bouton de soumission en fonction de la complétude du formulaire
+document.addEventListener("DOMContentLoaded", () => {
+  const titleInput = document.getElementById("title");
+  const categorySelect = document.getElementById("categoryInput");
+  const inputFile = document.getElementById("file");
+  const Valider = document.getElementById("Valider");
+
+  function ButtonState() {
+    if (
+      titleInput.value.trim() !== "" &&
+      categorySelect.value &&
+      inputFile.files.length > 0
+    ) {
+      Valider.disabled = false; // Active le btn si les conditions sont remplies
+      Valider.style.backgroundColor = "#1d6154";
+      Valider.style.color = "white";
+    } 
+    // else {
+    //   Valider.disabled = true; // Désactive le btn si une condition n'est pas remplie
+    //   Valider.style.backgroundColor = "#a7a7a7";
+    //   Valider.style.color = "white";
+    // }
+  }
+  ButtonState();
+})

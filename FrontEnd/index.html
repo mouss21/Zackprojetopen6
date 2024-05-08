@@ -21,25 +21,27 @@
 			<button id="addPictureBtn">Ajouter une photo</button>
 		</div>
 	</div>
+	<div class="modalWork"></div>
     <div class="modals">
 		<div class="modalWrappers" id="addPictures">
 			<div class="modalHeader"><i class="fa-solid fa-arrow-left"></i><i class="fa-solid fa-xmark"></i></div>
 			<h3 class="modalTitle">Ajout photo</h3>
-			
-				<form id="addPictureForm" name="addPictureForm">
+				<form>
 					<div id="labelPhoto">
-		                <i class="fa-regular fa-image"></i>
-						<label for="photo" id="browsePictures">+ Ajouter photo</label>
+		                <span><i class="fa-regular fa-image"></i></span>
+						<label for="file" id="browsePictures">+ Ajouter photo 
+						</label>
+						<input type="file" name="image" id="file">
+						<img src="#" alt="aperçut ">
 						<p>jpg, png : 4mo max</p>
 					</div>
 					<input type="file" class="photo" name="photo" id="photo" accept="image/png, image/jpeg" required>
 					<label for="title">Titre</label>
 					<input type="text" id="title" name="title" required>
 					<label for="selectCategory">Catégorie</label>
-					<select id="selectCategory" name="selectCategory">
-					</select>
+					<select name="selectCategory"  id="selectCategory"></select>
 				</form>
-			
+				<div class="barForm"></div>			
 			<input type="submit" id="valider" value="valider">
 		</div>
 	</div>
