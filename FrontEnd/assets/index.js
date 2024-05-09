@@ -64,6 +64,7 @@ if (!token) {
   //Hide categories
   document.querySelector("#categories").style.display = "none";
   document.querySelector("#edit-works").style.display = "flex";
+  document.querySelector(".barNoir").style.display = "flex";
   //ICI 
 }
 
@@ -184,7 +185,7 @@ async function displaymodal() {
 }
 displaymodal();
 
-// Suppression d'un Work à l'appui d'une icone
+// Suppression d'un Work à l'appui de l'icone
 
 function deleteWorks() {
   const trashAll = document.querySelectorAll(".fa-trash-can")
@@ -193,15 +194,11 @@ function deleteWorks() {
       const id = trash.id
       const init = { 
         method:"DELETE",
-        headers:{"content-type":"application/json"},
+        headers:{"content-type":"application/json", "Authorization": "Bearer " + token},
       }
+      console.log(init);
       fetch("http://localhost:5678/api/works/" +id,init)
-      .then((response) =>{
-        if(!response.ok){
-          console.log("la suppression n'a pas fonctionnée")
-        }
-        return response.json()
-      })
+  
       .then((data) => {
         console.log("la suppression a fonctionnée :",data)
         displaymodal()
@@ -210,11 +207,6 @@ function deleteWorks() {
     })
   });
 }
-
-
-  // btn ajouter photo . addEventLister pour basculer vers la deuxième page de la modale
-
-// affichage et supression du modal
 
 // ajout d'un image dans notre modal
 const ajoutImg = document.querySelector("#labelPhoto img")
@@ -266,7 +258,8 @@ foem.addEventListener("submit", async (e) =>{
     method:"POST",
     body:JSON.stringify(formData),
     headers : {
-      "content-type":"application/json"
+      "content-type":"application/json",
+      "Authorization": "Bearer " + token
     }
   })
    .then(response => response.json())
@@ -282,27 +275,32 @@ foem.addEventListener("submit", async (e) =>{
 // Activer le button de validation
 
 // Vérifie l'état du bouton de soumission en fonction de la complétude du formulaire
-document.addEventListener("DOMContentLoaded", () => {
-  const titleInput = document.getElementById("title");
-  const categorySelect = document.getElementById("categoryInput");
-  const inputFile = document.getElementById("file");
-  const Valider = document.getElementById("Valider");
+// document.addEventListener("DOMContentLoaded", () => {
+//   const titleInput = document.getElementById("title");
+//   const categorySelect = document.getElementById("categorySelect");
+//   const inputFile = document.getElementById("file");
+//   const Valider = document.getElementById("Valider");
 
-  function ButtonState() {
-    if (
-      titleInput.value.trim() !== "" &&
-      categorySelect.value &&
-      inputFile.files.length > 0
-    ) {
-      Valider.disabled = false; // Active le btn si les conditions sont remplies
-      Valider.style.backgroundColor = "#1d6154";
-      Valider.style.color = "white";
-    } 
-    // else {
-    //   Valider.disabled = true; // Désactive le btn si une condition n'est pas remplie
-    //   Valider.style.backgroundColor = "#a7a7a7";
-    //   Valider.style.color = "white";
-    // }
-  }
-  ButtonState();
-})
+//   function ButtonState() {
+//     console.log(titleInput.value);
+//     if (
+//       titleInput.value.trim() !== "" &&
+//       categorySelect.value &&
+//       inputFile.files.length > 0
+//     ) {
+//       console.log("validation");
+
+//       // Valider.removeAttribute("disabled") // Active le btn si les conditions sont remplies
+//       // Valider.style.backgroundColor = "#1d6154";
+//       // Valider.style.color = "white";
+//     } 
+//     else {
+//       // Valider.disabled = true; // Désactive le btn si une condition n'est pas remplie
+//       // Valider.style.backgroundColor = "#a7a7a7";
+//       // Valider.style.color = "white";
+//       console.log("pas de validation");
+//     }
+    
+//   }
+//   ButtonState();
+// })
