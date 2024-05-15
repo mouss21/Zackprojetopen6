@@ -27,7 +27,7 @@
 		<div class="modalWrappers" id="addPictures">
 			<div class="modalHeader"><i class="fa-solid fa-arrow-left"></i><i class="fa-solid fa-xmark"></i></div>
 			<h3 class="modalTitle">Ajout photo</h3>
-				<form>
+				<form enctype="multipart/form-data" method="POST">
 					<div id="labelPhoto">
 		                <span><i class="fa-regular fa-image"></i></span>
 						<label for="file" id="browsePictures">+ Ajouter photo 
@@ -40,13 +40,14 @@
 					<label for="title">Titre</label>
 					<input type="text" id="title" name="title" required>
 					<label for="selectCategory">Catégorie</label>
-					<select name="selectCategory"  id="selectCategory"></select>
+					<select name="selectCategory"  id="selectCategory"><i class="fa-solid fa-chevron-down"></i></select>
 				</form>
 				<div class="barForm"></div>			
 			<input type="submit" id="valider" value="valider">
 		</div>
 	</div>
 <!-- fin de modal -->
+
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>

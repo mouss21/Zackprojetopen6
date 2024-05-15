@@ -1,8 +1,4 @@
-/*
-Récuperer les données de l'API
-Méthode fetch
-dans des variables const categories = fetch();
-*/
+
 
 // Récupération des éléments du DOM
 const gallery = document.querySelector(".gallery")
@@ -68,9 +64,6 @@ if (!token) {
   //ICI 
 }
 
-
-
-
 // filtrer par catégorie au click 
 
 async function filterCategory() {
@@ -97,26 +90,20 @@ async function filterCategory() {
 }
 
 filterCategory();
-
-//********les modal generale***************
-
-
-
 //********ADMIN MODE******//
 const isLoggedIn = false;
 
 // Get reference to the login/logout button
-
 
 function getlogin() {
 
   const logBtn = document.querySelector(".logBtn");
   const xmark = document.querySelector(".modal .fa-xmark");
   const xmarks = document.querySelector(".modals .fa-xmark");
-  const arrow = document.querySelector(".modals .fa-arrow-left");
   const modifier = document.querySelector("#edit-works");
   const modal = document.querySelector(".modal");
   const modals = document.querySelector(".modals");
+  const arrow = document.querySelector(".fa-arrow-left")
   const addPictureBtn = document.querySelector("#addPictureBtn");
   //display admin mode if token is found and has the expected length (optional chaining)
   if (sessionStorage.getItem("token")?.length == 143) {
@@ -130,29 +117,30 @@ function getlogin() {
   }
   //supression du modal work 
   xmark.addEventListener("click", () =>{
-    console.log("xmark");
     modal.style.display = "none";
   })
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
   //supression du modal ajout 
   xmarks.addEventListener("click", () =>{
-    console.log("xmarks");
     modals.style.display = "none";
   })
    // ouverture du modal
   modifier.addEventListener("click", () => {
-    console.log("modifier");
     modal.style.display = "flex";
   })
    // du modal ajout au modal element 
   arrow.addEventListener("click", () => {
-    console.log("arrow");
     modal.style.display = "flex";
     modals.style.display = "none";
   })
   
   // ouverture de l'ajout 
   addPictureBtn.addEventListener("click", () => {
-    console.log("addPictureBtn");
     modals.style.display = "flex";
     modal.style.display = "none";
   })
@@ -161,7 +149,7 @@ function getlogin() {
 getlogin();
 
 
-/////////////////////////// MODAL CONTENT //////////////////////////
+/////////////////////////// MODAL //////////////////////////
 const modifier = document.querySelector("#edit-works");
 const modalContent = document.querySelector(".modalContent");
 
@@ -246,61 +234,48 @@ async function displayCategoryModal(){
 }
 displayCategoryModal()
 
-// ajouter une image avec un "POST"
-const foem = document.querySelector(".modals form")
-const modalTitle = document.querySelector(".modals .modalTitle")
-const category = document.querySelector(".modals .category")
 
-foem.addEventListener("submit", async (e) =>{
-  e.preventDefault()
-  const formData = new formData(form)
-  fetch("http://localhost:5678/api/categories",{
-    method:"POST",
-    body:JSON.stringify(formData),
-    headers : {
-      "content-type":"application/json",
-      "Authorization": "Bearer " + token
+// ajouter une image avec un "POST"
+const btnValider = document.getElementById("valider");
+btnValider.addEventListener("click", addNewWork);
+
+function addNewWork(e) {
+  e.preventDefault(); 
+
+  const token = sessionStorage.getItem("Token");
+
+  const title = document.getElementById("title").value;
+  const category = document.getElementById("selectCategory").value;
+  const image = document.getElementById("file").files[0];
+
+
+  if(!title || !category || !image) {
+    alert('Veuillez remplir tous les champs du formulaire.')
+    return;
+  }
+  
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("category", category);
+  formData.append("image", image);
+
+  fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    body: formData,
+    headers: {
+      "Accept" : 'application/json', 
+      "Authorization" : `Bearer ${token}`
     }
   })
-   .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      console.log("voici l'image ajout",data)
-      displayCategorysButtons()
-      displayWorks()
-    })
-    .catch(error => console.log("voici l'erreur",error))
-})
-
-// Activer le button de validation
-
-// Vérifie l'état du bouton de soumission en fonction de la complétude du formulaire
-// document.addEventListener("DOMContentLoaded", () => {
-//   const titleInput = document.getElementById("title");
-//   const categorySelect = document.getElementById("categorySelect");
-//   const inputFile = document.getElementById("file");
-//   const Valider = document.getElementById("Valider");
-
-//   function ButtonState() {
-//     console.log(titleInput.value);
-//     if (
-//       titleInput.value.trim() !== "" &&
-//       categorySelect.value &&
-//       inputFile.files.length > 0
-//     ) {
-//       console.log("validation");
-
-//       // Valider.removeAttribute("disabled") // Active le btn si les conditions sont remplies
-//       // Valider.style.backgroundColor = "#1d6154";
-//       // Valider.style.color = "white";
-//     } 
-//     else {
-//       // Valider.disabled = true; // Désactive le btn si une condition n'est pas remplie
-//       // Valider.style.backgroundColor = "#a7a7a7";
-//       // Valider.style.color = "white";
-//       console.log("pas de validation");
-//     }
-    
-//   }
-//   ButtonState();
-// })
+  .then(response => response.json()) 
+  .then(work => {
+    //create and add the new work to the gallery//
+    const figure = createWorkFigure(work);
+    const gallery = document.querySelector('.gallery');
+    gallery.appendChild(figure);
+  
+  
+    alert('Le nouvel travail a été ajouté avec succès.');
+  })
+  // .catch(error => console.error(error));
+}
