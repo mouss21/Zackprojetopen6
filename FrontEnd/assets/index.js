@@ -42,7 +42,7 @@ async function getCategorys() {
 
 async function displayCategorysButtons() {
   const categorys = await getCategorys();
-  console.log(categorys);
+
   categorys.forEach((category) => {
     const btn = document.createElement("button");
     btn.textContent = category.name;
@@ -68,7 +68,7 @@ if (!token) {
 
 async function filterCategory() {
   const works = await getWorks();
-  console.log(works);
+  
   const buttons = document.querySelectorAll("#categories button");
   buttons.forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -84,7 +84,7 @@ async function filterCategory() {
       } else {
         displayWorks();
       }
-      console.log(btnId);
+      
     });
   });
 }
@@ -184,11 +184,11 @@ function deleteWorks() {
         method:"DELETE",
         headers:{"content-type":"application/json", "Authorization": "Bearer " + token},
       }
-      console.log(init);
+      
       fetch("http://localhost:5678/api/works/" +id,init)
   
       .then((data) => {
-        console.log("la suppression a fonctionnée :",data)
+        
         displaymodal()
         getWorks()
       })
@@ -207,7 +207,7 @@ const iconeFile = document.querySelector("#labelPhoto .fa-image")
 
 inputFile.addEventListener("change",()=>{
   const file = inputFile.files[0]
-  console.log(file);
+  
   if (file) {
     const reader = new FileReader();
     reader.onload = function (e){
@@ -251,7 +251,7 @@ btnValider.addEventListener("click", addNewWork);
 function addNewWork(e) {
   e.preventDefault(); 
 
-  const token = sessionStorage.getItem("Token");
+  const token = sessionStorage.getItem("token");
 
   const title = document.getElementById("title").value;
   const category = document.getElementById("selectCategory").value;
@@ -278,23 +278,18 @@ function addNewWork(e) {
   })
   .then((response) => {
     if (response.ok) {
-      alert("Nouveau fichier envoyé avec succés:" + title);
       return response.json();
     } else {
       console.error("Erreur:", response.status);
     }
   }) 
-  // .then ((data) => {
-  //   addToWorksData(data, categoryName);
-  //   displayGallery(worksData);
-  //   document.querySelector(".modal").style.display = "none";
-  //   document.removeEventListener("click", closeModal);
-    
- 
+  .then ((data) => {
+    displayWorks()
+    document.querySelector(".modals").style.display = "none";
+
+    document.querySelector("form").reset();
+    document.getElementById("title").value = ""
+    document.getElementById("file").value = ""
+  }) 
   
-  //   alert('Le nouvel travail a été ajouté avec succès.');
-  //   displaymodal()
-  //   getWorks()
-  // })
-  // .catch(error => console.error(error));
 }
