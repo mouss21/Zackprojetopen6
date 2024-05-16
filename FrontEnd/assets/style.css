@@ -449,23 +449,7 @@ footer nav ul {
     margin-top: 12px;
     cursor: pointer;
 }
-input[type="submit"] {
-    font-family: 'Syne';
-    font-weight: 700;
-    color: white;
-    background-color: #1D6154;
-    margin: 10px auto;
-    width: 180px;
-    text-align: center;
-    border-radius: 60px;
-}
 
-.modifBtn{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: row;
-}
 .modalHeader {
 	display: flex;
 	flex-direction: row;
@@ -474,26 +458,6 @@ input[type="submit"] {
 }
 #editGallery .modalHeader {
 	justify-content: flex-end;
-}
-
-#edit-works {
-  display: none;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 0px;
-  cursor: pointer;
-}
-
-#edit-works span {
-  color: black;
-  font-size: 14px;
-  font-family: "Work Sans";
-  font-weight: 400;
-}
-
-#edit-works i {
-  font-size: 15px;
 }
 
 .fa-xmark {
@@ -573,10 +537,7 @@ input[type="submit"] {
 #addPicture .modalHeader {
 	justify-content: space-between; 
 }
-#valider {
-	background-color: #A7A7A7;
-	width: 37%;
-}
+
 #addPictureForm {
 	display: flex;
 	flex-direction: column;

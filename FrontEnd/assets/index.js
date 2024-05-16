@@ -236,6 +236,15 @@ displayCategoryModal()
 
 
 // ajouter une image avec un "POST"
+const addToWorksData = function(data, categoryName) {
+  const newWork = {};
+  newWork.title = data.title;
+  newWork.id = data.id;
+  newWork.category = {"id" : data.categoryId, "name" : categoryName};
+  newWork.imageUrl = data.imageUrl;
+  worksData.push(newWork);
+}
+//pour le btn valide
 const btnValider = document.getElementById("valider");
 btnValider.addEventListener("click", addNewWork);
 
@@ -267,15 +276,25 @@ function addNewWork(e) {
       "Authorization" : `Bearer ${token}`
     }
   })
-  .then(response => response.json()) 
-  .then(work => {
-    //create and add the new work to the gallery//
-    const figure = createWorkFigure(work);
-    const gallery = document.querySelector('.gallery');
-    gallery.appendChild(figure);
+  .then((response) => {
+    if (response.ok) {
+      alert("Nouveau fichier envoyé avec succés:" + title);
+      return response.json();
+    } else {
+      console.error("Erreur:", response.status);
+    }
+  }) 
+  // .then ((data) => {
+  //   addToWorksData(data, categoryName);
+  //   displayGallery(worksData);
+  //   document.querySelector(".modal").style.display = "none";
+  //   document.removeEventListener("click", closeModal);
+    
+ 
   
-  
-    alert('Le nouvel travail a été ajouté avec succès.');
-  })
+  //   alert('Le nouvel travail a été ajouté avec succès.');
+  //   displaymodal()
+  //   getWorks()
+  // })
   // .catch(error => console.error(error));
 }
