@@ -261,7 +261,8 @@ function addNewWork(e) {
   if(!title || !category || !image) {
     alert('Veuillez remplir tous les champs du formulaire.')
     return;
-  }
+  } 
+ 
   
   const formData = new FormData();
   formData.append("title", title);
@@ -286,10 +287,24 @@ function addNewWork(e) {
   .then ((data) => {
     displayWorks()
     document.querySelector(".modals").style.display = "none";
-
-    document.querySelector("form").reset();
-    document.getElementById("title").value = ""
-    document.getElementById("file").value = ""
+    location.reload();
   }) 
   
 }
+
+const title = document.getElementById("title");
+const selectCategory = document.getElementById("selectCategory");
+const photo = document.getElementById("photo");
+const valider = document.getElementById("valider");
+
+function checkForm() {
+  if (title.value != "" || selectCategory.value != "" || photo.value != "") {
+    valider.style.backgroundColor = "#1D6154";
+  } else {
+    valider.style.backgroundColor = "";
+    }
+  }
+
+title.addEventListener('input', checkForm);
+selectCategory.addEventListener('change', checkForm);
+photo.addEventListener('change', checkForm);
