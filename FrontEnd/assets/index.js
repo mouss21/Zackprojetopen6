@@ -188,9 +188,10 @@ function deleteWorks() {
       fetch("http://localhost:5678/api/works/" +id,init)
   
       .then((data) => {
-        
+
         displaymodal()
         getWorks()
+        location.reload();
       })
     })
   });

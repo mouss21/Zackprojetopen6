@@ -395,6 +395,15 @@ footer nav ul {
 	margin-bottom: 9px;
 }
 
+select::after {
+	content: "\25BC"; /* Unicode pour le chevron-down */
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
+}
+
 #selectCategory{
 	height: 40px;
     width: 100%;
@@ -610,7 +619,6 @@ select {
 	appearance: none;
 	-moz-appearance: none;
 	-webkit-appearance: none;
-	background-image: url(./icons/chevron-down.png);
 	background-repeat: no-repeat;
 	background-position: center right;
 	background-origin: content-box;
