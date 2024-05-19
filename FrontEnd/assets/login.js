@@ -10,7 +10,7 @@ document
 function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const msgErreur = document.querySelector("#loginForm p");
+  const msgErreur = document.querySelector("#loginForm p").value;
 
    fetch("http://localhost:5678/api/users/login", {
       method: "POST",

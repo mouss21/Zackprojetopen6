@@ -51,13 +51,13 @@ async function displayCategorysButtons() {
   });
 }
 
-//Gestion de l'affichage des boutons catégories 
+//Gestion de l'affichage des boutons catégories après connexion
 
 
 if (!token) {
   displayCategorysButtons();
 } else {
-  //Hide categories
+  //les categories après connexion
   document.querySelector("#categories").style.display = "none";
   document.querySelector("#edit-works").style.display = "flex";
   document.querySelector(".barNoir").style.display = "flex";
@@ -93,7 +93,7 @@ filterCategory();
 //********ADMIN MODE******//
 const isLoggedIn = false;
 
-// Get reference to the login/logout button
+// gestion entre login et logout 
 
 function getlogin() {
 
@@ -105,7 +105,7 @@ function getlogin() {
   const modals = document.querySelector(".modals");
   const arrow = document.querySelector(".fa-arrow-left")
   const addPictureBtn = document.querySelector("#addPictureBtn");
-  //display admin mode if token is found and has the expected length (optional chaining)
+  
   if (sessionStorage.getItem("token")?.length == 143) {
     //change login en logout
     logBtn.innerText = "logout";
@@ -152,7 +152,7 @@ getlogin();
 /////////////////////////// MODAL //////////////////////////
 const modifier = document.querySelector("#edit-works");
 const modalContent = document.querySelector(".modalContent");
-
+// ajout des élement dans la modal de supression
 async function displaymodal() {
   modalContent.innerHTML = ""
   const works = await getWorks()
