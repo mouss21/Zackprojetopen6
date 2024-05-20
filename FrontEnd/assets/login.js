@@ -10,7 +10,7 @@ document
 function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const msgErreur = document.getElementById("loginForm p")
+  const msgErreur = document.getElementById("loginForm p");
 
    fetch("http://localhost:5678/api/users/login", {
       method: "POST",
@@ -22,7 +22,7 @@ function login() {
    
   .then((response) => {
     if (response.status !== 200) {
-      msgErreur.textContent = ""
+      msgErreur.textContent = "";
     
     } else {
       response.json()
