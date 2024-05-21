@@ -609,9 +609,6 @@ footer nav ul {
 }
 
 select {
-	appearance: none;
-	-moz-appearance: none;
-	-webkit-appearance: none;
 	background-repeat: no-repeat;
 	background-position: center right;
 	background-origin: content-box;
