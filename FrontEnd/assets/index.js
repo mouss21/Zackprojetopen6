@@ -190,8 +190,8 @@ function deleteWorks() {
       .then((data) => {
 
         displaymodal()
-        getWorks()
-        location.reload();
+        displayWorks()
+
       })
     })
   });
@@ -250,7 +250,8 @@ const btnValider = document.getElementById("valider");
 btnValider.addEventListener("click", addNewWork);
 
 function addNewWork(e) {
-  e.preventDefault(); 
+  e.preventDefault();
+
 
   const token = sessionStorage.getItem("token");
 
@@ -287,8 +288,15 @@ function addNewWork(e) {
   }) 
   .then ((data) => {
     displayWorks()
+    displaymodal()
     document.querySelector(".modals").style.display = "none";
-    location.reload();
+
+    document.getElementById("title").value ="";
+    document.getElementById("selectCategory").value ="";
+    document.querySelector("#labelPhoto img").style.display = "none";
+    document.querySelector("#labelPhoto label").style.display = "flex";
+    document.querySelector("#labelPhoto .fa-image").style.display = "flex";
+    document.querySelector("#labelPhoto p").style.display = "flex"; 
   }) 
   
 }
